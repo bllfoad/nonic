@@ -1,4 +1,8 @@
-# No Nic – Quit‑smoking companion app (Flutter)
+<p align="center">
+  <img src="assets/icon.png" width="120" alt="No Nic icon" />
+</p>
+<h2 align="center">No Nic</h2>
+<p align="center">Quit‑smoking companion app (Flutter)</p>
 
 Nonic is a cross‑platform Flutter app that helps users quit smoking and stay smoke‑free. It combines daily check‑ins, craving logging, smart risk insights, milestone tracking, savings goals, and gentle notifications to support behavior change.
 
