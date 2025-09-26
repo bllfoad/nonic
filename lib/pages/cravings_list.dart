@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import '../models.dart';
 import '../storage.dart';
 import 'log_craving.dart';
+import '../theme.dart';
 
 class CravingsListScreen extends StatefulWidget {
   final StorageService storage;
@@ -50,13 +51,8 @@ class _CravingsListScreenState extends State<CravingsListScreen> {
               await widget.storage.removeCraving(e.id);
               await _load();
             },
-            child: Container(
+            child: Glass(
               margin: const EdgeInsets.only(bottom: 12),
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-                borderRadius: BorderRadius.circular(16),
-              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

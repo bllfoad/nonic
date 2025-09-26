@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'sos_breathe.dart';
 
 class SupportScreen extends StatelessWidget {
   const SupportScreen({super.key});
@@ -8,12 +9,20 @@ class SupportScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Support')),
       body: ListView(
         padding: const EdgeInsets.all(20),
-        children: const [
-          _SupportItem(icon: Icons.call, title: 'Helpline'),
-          SizedBox(height: 12),
-          _SupportItem(icon: Icons.article, title: 'Articles'),
-          SizedBox(height: 12),
-          _SupportItem(icon: Icons.groups, title: 'Community'),
+        children: [
+          _SupportItem(icon: Icons.call, title: 'Helpline', onTap: () {}),
+          const SizedBox(height: 12),
+          _SupportItem(icon: Icons.article, title: 'Articles', onTap: () {}),
+          const SizedBox(height: 12),
+          _SupportItem(icon: Icons.groups, title: 'Community', onTap: () {}),
+          const SizedBox(height: 12),
+          _SupportItem(
+            icon: Icons.self_improvement,
+            title: 'SOS Breathing (4-7-8)',
+            onTap: () async {
+              await Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SosBreatheScreen()));
+            },
+          ),
         ],
       ),
     );
@@ -23,13 +32,15 @@ class SupportScreen extends StatelessWidget {
 class _SupportItem extends StatelessWidget {
   final IconData icon;
   final String title;
-  const _SupportItem({required this.icon, required this.title});
+  final VoidCallback? onTap;
+  const _SupportItem({required this.icon, required this.title, this.onTap});
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(backgroundColor: Theme.of(context).cardColor, child: Icon(icon)),
       title: Text(title),
       tileColor: Theme.of(context).colorScheme.surface,
+      onTap: onTap,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16), side: BorderSide(color: Theme.of(context).colorScheme.outline)),
     );
   }

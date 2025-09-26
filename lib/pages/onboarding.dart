@@ -15,6 +15,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   DateTime quitDate = DateTime.now();
   double packPrice = 10;
   int cigsPerDay = 10;
+  int age = 30;
+  String gender = 'unspecified';
+  double weightKg = 70;
+  double heightCm = 170;
+  DateTime startedSmokingDate = DateTime.now().subtract(const Duration(days: 365 * 5));
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +52,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             },
           ),
           const SizedBox(height: 16),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            title: const Text('Started smoking'),
+            subtitle: Text(DateFormat.yMMMd().format(startedSmokingDate)),
+            trailing: const Icon(Icons.calendar_month),
+            onTap: () async {
+              final picked = await showDatePicker(
+                context: context,
+                initialDate: startedSmokingDate,
+                firstDate: DateTime(1970),
+                lastDate: DateTime.now(),
+              );
+              if (picked != null) setState(() => startedSmokingDate = picked);
+            },
+          ),
+          const SizedBox(height: 16),
           Text('Cigarettes per day: $cigsPerDay'),
           Slider(
             value: cigsPerDay.toDouble(),
@@ -65,6 +86,46 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             divisions: 56,
             onChanged: (v) => setState(() => packPrice = double.parse(v.toStringAsFixed(2))),
           ),
+          const SizedBox(height: 16),
+          Text('Age: $age'),
+          Slider(
+            value: age.toDouble(),
+            min: 12,
+            max: 90,
+            divisions: 78,
+            label: '$age',
+            onChanged: (v) => setState(() => age = v.round()),
+          ),
+          const SizedBox(height: 16),
+          DropdownButtonFormField<String>(
+            value: gender,
+            decoration: const InputDecoration(hintText: 'Gender'),
+            items: const [
+              DropdownMenuItem(value: 'unspecified', child: Text('Prefer not to say')),
+              DropdownMenuItem(value: 'male', child: Text('Male')),
+              DropdownMenuItem(value: 'female', child: Text('Female')),
+              DropdownMenuItem(value: 'other', child: Text('Other')),
+            ],
+            onChanged: (v) => setState(() => gender = v ?? 'unspecified'),
+          ),
+          const SizedBox(height: 16),
+          Text('Weight (kg): ${weightKg.toStringAsFixed(1)}'),
+          Slider(
+            value: weightKg,
+            min: 40,
+            max: 200,
+            divisions: 160,
+            onChanged: (v) => setState(() => weightKg = double.parse(v.toStringAsFixed(1))),
+          ),
+          const SizedBox(height: 16),
+          Text('Height (cm): ${heightCm.toStringAsFixed(0)}'),
+          Slider(
+            value: heightCm,
+            min: 140,
+            max: 210,
+            divisions: 70,
+            onChanged: (v) => setState(() => heightCm = double.parse(v.toStringAsFixed(0))),
+          ),
           const SizedBox(height: 24),
           ElevatedButton(
             onPressed: () {
@@ -74,6 +135,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 quitDate: quitDate,
                 packPrice: packPrice,
                 cigarettesPerDay: cigsPerDay,
+                age: age,
+                gender: gender,
+                weightKg: weightKg,
+                heightCm: heightCm,
+                startedSmokingDate: startedSmokingDate,
               ));
             },
             child: const Text('Begin Your Quit Journey'),

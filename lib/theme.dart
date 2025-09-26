@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui';
 
 class NonicColors {
   static const Color background = Color(0xFF0F231B);
@@ -73,4 +74,35 @@ ThemeData buildNonicTheme() {
 }
 
 
+class Glass extends StatelessWidget {
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? margin;
+  final double borderRadius;
+  final Color? tint;
+  const Glass({super.key, required this.child, this.padding = const EdgeInsets.all(16), this.margin, this.borderRadius = 16, this.tint});
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      margin: margin,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(borderRadius),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+          child: Container(
+            padding: padding,
+            decoration: BoxDecoration(
+              color: (tint ?? theme.colorScheme.surface).withOpacity(0.28),
+              borderRadius: BorderRadius.circular(borderRadius),
+              border: Border.all(color: Colors.white.withOpacity(0.12)),
+              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.15), blurRadius: 20, offset: const Offset(0, 10))],
+            ),
+            child: child,
+          ),
+        ),
+      ),
+    );
+  }
+}
 
